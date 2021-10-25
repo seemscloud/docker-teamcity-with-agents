@@ -8,11 +8,24 @@ services:
     volumes:
       - teamcity-server-datadir:/data/teamcity_server/datadir:rw
       - teamcity-server-logs:/opt/teamcity/logs:rw
+    ports:
+      - "8111:8111"
+    networks:
+      - teamcity-network
   teamcity-agent0:
-    image: jetbrains/teamcity-server:2021.2
+    image: jetbrains/teamcity-agent:2021.2
+    hostname: teamcity-agent0
     container_name: teamcity-agent0
     environment:
-      SERVER_URL: teamcity-server
+      AGENT_NAME: "teamcity-agent0"
+      OWN_ADDRESS: "0.0.0.0"
+      OWN_PORT: "9090"
+      SERVER_URL: "teamcity-server:8111"
+    networks:
+      - teamcity-network
+
+networks:
+  teamcity-network:
 
 volumes:
   teamcity-server-datadir:

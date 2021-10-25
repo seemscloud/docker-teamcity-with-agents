@@ -1,1 +1,0 @@
-# docker-teamcity-with-agents

@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  teamcity-server:
+    image: jetbrains/teamcity-server:2021.2
+    hostname: teamcity-server
+    container_name: teamcity-server
+    volumes:
+      - teamcity-server-datadir:/data/teamcity_server/datadir:rw
+      - teamcity-server-logs:/opt/teamcity/logs:rw
+  teamcity-agent0:
+    image: jetbrains/teamcity-server:2021.2
+    container_name: teamcity-agent0
+    environment:
+      SERVER_URL: teamcity-server
+
+volumes:
+  teamcity-server-datadir:
+  teamcity-server-logs:
